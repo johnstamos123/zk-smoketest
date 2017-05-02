@@ -20,6 +20,9 @@ DEFAULT_TIMEOUT = 30000
 
 ZOO_OPEN_ACL_UNSAFE = {"perms":0x1f, "scheme":"world", "id" :"anyone"}
 
+def test():
+  return
+
 class ZKClientError(Exception):
     def __init__(self, value):
         self.value = value
@@ -51,6 +54,7 @@ class ZKClient(object):
         self.handle = h
         self.conn_cv.acquire()
         self.connected = True
+        zookeeper.add_auth(self.handle, "digest", "super:secret", None)
         self.conn_cv.notifyAll()
         self.conn_cv.release()
 
